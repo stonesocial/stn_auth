@@ -1,0 +1,25 @@
+name: stn_auth
+description: "A new Flutter package project."
+version: 0.0.1
+homepage:
+publish_to: none
+
+environment:
+  sdk: ^3.5.3
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  dependencies:
+    path: ../dependencies
+  core:
+    path: ../core
+
+dev_dependencies:
+  mockito: ^5.4.4
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
