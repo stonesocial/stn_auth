@@ -5,6 +5,8 @@ const noSessionRecordedMsg = 'No session recorded';
 const invalidAccessCodePleaseTryAgain = 'Invalid access code, please try again';
 const rememberKey = 'remember_key';
 
+const _mnemonicTest = 'still more purpose seminar sponsor section sibling apology circle more dutch casino';
+
 @singleton
 class AuthService {
   final ISecureStorage secureStorage;
@@ -17,7 +19,15 @@ class AuthService {
     String? accessCode,
     bool biometrics = false,
     bool remember = false,
+    bool testing = false,
   }) async {
+    if (testing) {
+      mnemonic = _mnemonicTest;
+      register(accessCode: accessCode!, priKey: mnemonic!);
+
+      return (null, (accessCode, mnemonic!));
+    }
+
     final accCod = await secureStorage.read<String>(accessCodeKey);
     final priKey = await secureStorage.read<String>(privateKey);
 
