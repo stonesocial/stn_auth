@@ -67,7 +67,10 @@ void main() {
         when(mockSecureStorage.write(privateKey, Strings.empty))
             .thenAnswer((_) async => (null, true));
 
-        final (failure, success) = await authService.register(accessCode: 'newAccessCode', priKey: 'newPrivateKey');
+        final (failure, success) = await authService.register(
+          accessCode: 'newAccessCode',
+          priKey: 'newPrivateKey',
+        );
 
         expect(failure, isNull);
         expect(success, true);
@@ -130,7 +133,7 @@ void main() {
       test('should clear mnemonic and set remember to false', () async {
         when(mockCacheStorage.setBool(rememberKey, false)).thenAnswer((_) async => true);
 
-        final result = await authService.logout(synchronized: true);
+        final result = await authService.logout();
 
         expect(result, true);
         expect(AuthService.mnemonic, isNull);

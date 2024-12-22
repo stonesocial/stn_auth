@@ -21,9 +21,8 @@ class AuthService {
   }) async {
     if (testing) {
       mnemonic = Defines.mnemonicTest;
-      register(accessCode: accessCode!, priKey: mnemonic!);
 
-      return (null, (accessCode, mnemonic!));
+      return (null, (accessCode!, mnemonic!));
     }
 
     final accCod = await secureStorage.read<String>(accessCodeKey);
@@ -69,9 +68,24 @@ class AuthService {
     return cacheStorage.getBool(rememberKey) ?? false;
   }
 
-  Future<bool> logout({required bool synchronized}) async {
+  Future<bool> logout() async {
     mnemonic = null;
 
     return await setRemember(false);
+  }
+
+  //cache
+  Future<String?> getAccessCode() async {
+    final (err, res) = await secureStorage.read(accessCodeKey);
+    if (err != null && err.message == errorReadingCacheData) return null;
+
+    return res;
+  }
+
+  Future<bool> clearCredentials() async {
+    final (err1, succ1) = await secureStorage.delete(accessCodeKey);
+    final (err2, succ2) = await secureStorage.delete(privateKey);
+
+    return succ1 && succ2;
   }
 }
